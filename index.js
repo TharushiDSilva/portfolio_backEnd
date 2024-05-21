@@ -21,6 +21,7 @@ app.get('/projects', async (req, res) => {
     }
 });
 //create an endpoint for creating a project
+
 app.post('/projects',async(req,res)=>{
     
     console.log(req.body);
