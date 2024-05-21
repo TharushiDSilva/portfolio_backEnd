@@ -30,7 +30,7 @@ app.post('/projects', async (req, res) => {
 app.get('/blogs', async (req, res) => {
     try {
         const blogs = await blog.find();
-        res.json(projects);
+        res.json(blog);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
