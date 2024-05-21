@@ -1,10 +1,11 @@
-const { blog } = require("./blog.1");
-const mongoose=require("./db");
-const blog_Schema =new mongoose.Schema({
-    title:String,
-    content:String,
-    date: Date,
+const mongoose = require('./db');
 
+const blogSchema = new mongoose.Schema({
+    name: String,
+    content:String,
+    description: String,
 });
-exports.blog_Schema = blog_Schema;
-module.exports=blog;
+
+const Blog = mongoose.model('Blog', blogSchema);
+
+module.exports = Blog;
