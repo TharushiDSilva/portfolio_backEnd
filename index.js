@@ -20,10 +20,46 @@ app.get('/projects', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-app.post('/projects', async (req, res) => {
+//create an endpoint for creating a project
+app.post('/projects',async(req,res)=>{
+    
+    console.log(req.body);
+    //res.send('creating a new project');
+
+    const project= new Project(req.body);
+    try{
+        const newProject = await project.save();
+        res.status(201).json(newProject);
+    }catch(err){
+        res.status(400).json({message: err.message});
+    }
+});
+
+//create the endpoints for updating the project by id
+app.patch('/projects/:id', async (req, res) => {
     try {
-        const newprojects = await Project.save();
-        res.json(newprojects);
+        const project = await Project.findById(req.params.id);
+        if(project){
+        project.set(req.body);
+        const updatedProject = await project.save();
+        res.json(updatedProject);
+        }else{
+            res.status(404).json({ message: 'Project not found' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//delete the project by id
+app.delete('/projects/:id', async (req, res) => {
+    try {
+        const project = await Project.findByIdAndDelete(req.params.id);
+        if(project){
+            res.json({message: 'Project deleted successfully'});
+        } else {
+            res.status(404).json({ message: 'Project not found' });
+        }
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -31,13 +67,12 @@ app.post('/projects', async (req, res) => {
 
 app.get('/blogs', async (req, res) => {
     try {
-        const blogs = await blog.find();
-        res.json(blog);
+        const blog = await Blog.find();
+        res.json(projects);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
-
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });// runs the app
