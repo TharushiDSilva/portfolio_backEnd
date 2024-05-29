@@ -4,6 +4,10 @@ const port = 5000;
 
 app.use(express.json());//this needs to above the routes that will use req.body
 
+// CORS Cross Origin Resource Sharing mechanism to secure cross origin requests and data transfers between browsers and servers
+const cors=require('cors');
+app.use(cors());
+
 require('dotenv').config();
 const Project = require('./Project');
 const Blog=require('./blog');
